@@ -28,7 +28,7 @@ app.use(express.json());
 
 app.use('/api/user' , authRoute);
 //app.use('/api/slot', slotRoute );
-app.use('./api/appointments', appointmentRoute);
+app.use('/api/appointments',appointmentRoute);
 
 const port = 3005;
 app.listen(port , () => console.log( "Server is running and listening to port " ,port ));
