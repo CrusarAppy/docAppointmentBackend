@@ -6,6 +6,7 @@ const User = require('../models/User');
 
 
 const Appointment = require('../models/AppointmentModel');
+const Doctor  = require('../models/DoctorDetails');
 
 // get all appointments
 router.get('/appointmentDetails' , async (req,res) => {
@@ -24,20 +25,49 @@ router.get('/appointmentDetails' , async (req,res) => {
     }
 
 })
+// get specific appointments
+router.get('/:userId' , async (req,res) => {
+ // console.log(req.body);
+  try{
+    console.log(req.params)
+    const user = await User.findById(req.params.userId);
+    console.log(user);
+    const uservalue = user._id;
+    console.log(uservalue);
+    const appointment =  await Appointment.find(user_id);
+    //const value = appointment;
+    console.log(appointment);
+    if (uservalue === appointment){     
+         console.log("Apoointments details");      
+          return res.json({message : appointment})  
+          
+    }
+          else{
+          res.json({message : ' appointments not registered '});
+    }
+  }     
+  catch(err){
+      res.status(401).json({message: err});
+  }
 
-router.post('/createAppointment/:userId' , async(req,res) =>{
+})
+
+router.post('/createAppointment/:userId/:doctorId' , async(req,res) =>{
    
     
-    // appointmentWithUser =  User.findById(req.params.userId);
+    // appointmentWithUser =  await User.findById(User._id);
     // .populate("Appointments",User._id);
-
-    // console.log(appointmentWithUser);
-    console.log(req.params.userId);
+   // doctorIdvalue =  await Doctor.findById(Doctor._id);
+    //console.log(doctorIdvalue);
+   
+    //console.log(appointmentWithUser);
+    //console.log(req.params.userId);
 
     var appointments = new Appointment({
         time_slot: req.body.time_slot,
         date: req.body.date,
-        user_id :req.params.userId
+        user_id :req.params.userId,
+        doctor_id : req.params.doctorId
         
       });   
       appointments.save();
@@ -47,28 +77,7 @@ router.post('/createAppointment/:userId' , async(req,res) =>{
     
 })
 
-// router.route('/createAppointment/:userId').post( async function(req,res){
-//   console.log('called',req.params.userId)
-//  console.log('date',req.body.date)
-//   // appointmentWithUser = await User.findById('5dbfe777a18f13106420d73e').populate("Appointments", User._id);
-//    appointmentWithUser = await User.findById(req.params.userId).populate("Appointments", User._id);
 
-
-//    console.log('appoint user',appointmentWithUser)
-
-//    var appointments = new Appointment({
-//        time_slot: req.body.time_slot,
-//        date: req.body.date,
-//        user_id :appointmentWithUser
-       
-//      });
-//      appointments.save();
-
-//      res.json({"message":"documents Saved"})
-//      // Creates a new record from a submitted form
-    
-   
-// })
 
 
 

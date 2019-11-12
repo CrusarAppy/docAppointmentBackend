@@ -23,8 +23,8 @@ const registerValidation = (data)=> {
                 .required(),
 
         Type: Joi.string()
-                .min(4)
-                .required(),
+                .min(4),
+                
         Address : Joi.string()
                 .required(),
         PhoneNumber : Joi.number()

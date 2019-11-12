@@ -44,7 +44,7 @@ router.delete('/:userId' , async (req,res) => {
     //console.log(req.params.postId);
     try{
         const removeUser =  await User.findByIdAndDelete({ _id : req.params.userId });
-        res.json(removeUser);
+        res.send("User removed!");
     }catch(err){
         res.json({message: err});
 
@@ -90,12 +90,14 @@ router.post('/register' , async(req,res) =>{
         PhoneNumber :req.body.PhoneNumber,   
         Email : req.body.Email,
         Password :  hashedPassword,
+        Type : "User"
        
 
     });
     try{
         const savedUser = await user.save();
-        res.send({user : user._id});
+       // res.status(200).send("User is registered!", {user_id : user._id} )
+         res.send({user_id : user._id});
 
     }catch(err){
         res.status(400).send(err);
