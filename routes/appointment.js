@@ -25,32 +25,60 @@ router.get('/appointmentDetails' , async (req,res) => {
     }
 
 })
-// get specific appointments
-router.get('/:userId' , async (req,res) => {
+// get specific appointments of user
+router.get('/user/:userId' , async (req,res) => {
+
+  // const doctor = await Doctor.findById(req.params.doctorId);
+  // console.log('doctor',doctor);
+
+  // const doctorId = doctor._id;
+  // console.log(doctorId)
+
+  // const user = await User.findById(req.params.userId);
+  // console.log('user',user);
+  // const doctorId = doctor._id;
+  // console.log(doctorId)
+
  // console.log(req.body);
   try{
-    console.log(req.params)
-    const user = await User.findById(req.params.userId);
-    console.log(user);
-    const uservalue = user._id;
-    console.log(uservalue);
-    const appointment =  await Appointment.find(user_id);
-    //const value = appointment;
-    console.log(appointment);
-    if (uservalue === appointment){     
-         console.log("Apoointments details");      
-          return res.json({message : appointment})  
-          
-    }
-          else{
-          res.json({message : ' appointments not registered '});
-    }
+    console.log('user_id',req.params.userId)
+     const user = await User.findById(req.params.userId);
+     console.log('user',user);
+     const uservalue = user._id;
+     console.log('user_value',uservalue);
+     const appointment =  await Appointment.findOne({user_id:uservalue}); // retrievees specific appointment of the user
+     
+     //const value = appointment;
+     console.log('appointments',appointment);
+     res.json({appointment});
   }     
   catch(err){
       res.status(401).json({message: err});
   }
 
 })
+// get specific appointments of doctor
+router.get('/doctor/:doctorId' , async (req,res) => {
+  // console.log(req.body);
+   try{
+     console.log('doctor_id',req.params.doctorId)
+      const doctor = await Doctor.findById(req.params.doctorId);
+      console.log('doctor',doctor);
+      const doctorvalue = doctor._id;
+      console.log('doctor_value',doctorvalue);
+      const appointment =  await Appointment.findOne({doctor_id:doctorvalue}); // retrievees specific appointment of the user
+      
+      //const value = appointment;
+      console.log('appointments',appointment);
+      res.json({appointment});
+   }     
+   catch(err){
+       res.status(401).json({message: err});
+   }
+ 
+ })
+
+
 
 router.post('/createAppointment/:userId/:doctorId' , async(req,res) =>{
    

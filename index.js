@@ -15,7 +15,7 @@ const authRoute =  require('./routes/auth');
 //const slotRoute = require('./routes/slots');
 const appointmentRoute = require('./routes/appointment');
 const doctorRoute = require('./routes/doctors');
-
+const  doctorappintmentRoute = require('./routes/doctorViewAppointment');
 //connect to db
 mongoose.connect( process.env.DB_CONNECT , 
 {useNewUrlParser : true ,
@@ -39,6 +39,7 @@ app.use('/api/user' , authRoute);
 //app.use('/api/slot', slotRoute );
 app.use('/api/appointments',appointmentRoute);
 app.use('/api/doctors' , doctorRoute);
+app.use('/api/doctors/view' , doctorappintmentRoute);
 
 const port = 3005;
 app.listen(port , () => console.log( "Server is running and listening to port " ,port ));

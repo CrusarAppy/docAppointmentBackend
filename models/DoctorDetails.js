@@ -37,6 +37,12 @@ const DoctorSchema = new mongoose.Schema({
         max :1024,
         min : 6
     },
+    Specialization : {
+        type: Array,
+        required : true,
+        max :1024,
+        min :6
+    },
     Type : {
         type: String
     }

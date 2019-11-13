@@ -14,6 +14,7 @@ router.post('/register' , async(req,res) =>{
         PhoneNumber :req.body.PhoneNumber,   
         Email : req.body.Email,
         Password :  req.body.Password,
+        Specialization: req.body.Specialization,
         Type : "Doctor"
        
 
@@ -44,19 +45,23 @@ router.get('/doctorDetails' , async (req,res) => {
     }
 
 })
-
-//specific doctors
-router.get('/:doctorId' , async (req,res) => {
-    //console.log(req.params.postId);
+// get doctors by speciality
+router.get('/doctorSpeciality/:speciality' , async (req,res) => {
+    //console.log(req.body);
     try{
-        const doctor =  await Doctor.findById(req.params.doctorId);
-        res.json(doctor);
+    const doctor =  await Doctor.find({Specialization : req.params.speciality});
+        console.log(doctor);
+        res.json({doctor});
     }catch(err){
-        res.json({message: err});
+        res.status(401).json({message: err});
 
-    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
-                                                                       
+    }
+
 })
+
+
+
+
 
 router.post('/login' , async(req,res) =>{
 
@@ -126,6 +131,8 @@ router.patch('/:doctorId' , async (req,res) => {
     }
 
 })
+
+
 
 
 module.exports = router;
